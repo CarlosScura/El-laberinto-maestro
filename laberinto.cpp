@@ -4,6 +4,8 @@
 #include <queue>
 #include <ctime>
 #include <cstdlib>
+// incluimos string para usar stoi
+#include <string>
 
 using namespace std;
 
@@ -11,7 +13,7 @@ using namespace std;
 
 const char MURO = '#';
 const char CAMINO = '*';
-const char SOLUCION = '.';
+const char SOLUCION = ' ';
 
 // creamos la funcion para inicializar el labertinto y lo llenamos de muros
 
@@ -77,7 +79,7 @@ bool resolver_laberinto(vector<vector<char>>& laberinto){
     // creamos la cola de control para el BFS
     queue<Nodo> cola;
 
-    // creamos el vertor de visitados
+    // creamos el vector de visitados
     vector<vector<bool>> visitados(
         laberinto.size(),
         vector<bool>(laberinto[0].size(),false)
@@ -139,19 +141,19 @@ bool resolver_laberinto(vector<vector<char>>& laberinto){
     return 0;
 }
 
-// Iniciamos la funcion main
+// Iniciamos la funcion main y le pasamos los parametros externos.
 
-int main(){
+int main(int argc, char* argv[]){
     // Iniciamos la aleatoriedad
     srand(time(0));
 
-    int fila =0 , columna;
+    int fila = 10 , columna;
     
-    while (fila < 10){
-        cout << "Ingresa el tamano del laberinto por favor, minimo 10: \n";
-        cin >> fila;
+    // convertimos el string a integer si es que el argument count es mayor a 1
+    if (argc > 1){
+        fila = stoi(argv[1]);
     }
-    
+
     // lo hacemos impar
     if (fila % 2 == 0) fila++;
     
@@ -197,4 +199,6 @@ int main(){
 
     cout << "\nSolucion.\n";
     mostrar_laberinto(laberinto);
+    
+    return 0;
 }
